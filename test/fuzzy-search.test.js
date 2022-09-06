@@ -1,3 +1,4 @@
+
 const Fuse = require('../dist/fuse')
 import * as ErrorMsg from '../src/core/errorMessages'
 

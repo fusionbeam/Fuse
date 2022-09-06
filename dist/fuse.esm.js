@@ -1,5 +1,5 @@
 /**
- * Fuse.js v6.6.2 - Lightweight fuzzy-search (http://fusejs.io)
+ * Fuse.js v6.6.3-b1 - Lightweight fuzzy-search (http://fusejs.io)
  *
  * Copyright (c) 2022 Kiro Risk (http://kiro.me)
  * All Rights Reserved. Apache Software License 2.0
@@ -98,8 +98,6 @@ class KeyStore {
 
     keys.forEach((key) => {
       let obj = createKey(key);
-
-      totalWeight += obj.weight;
 
       this._keys.push(obj);
       this._keyMap[obj.id] = obj;
@@ -1177,6 +1175,8 @@ function parseQuery(pattern, options = {}) {
   })
 }
 
+/* eslint-disable no-debugger */
+
 // These extended matchers can return an array of matches, as opposed
 // to a singl match
 const MultiMatchSet = new Set([FuzzyMatch.type, IncludeMatch.type]);
@@ -1253,6 +1253,14 @@ class ExtendedSearch {
       }
     }
 
+    // if (text == 'Roman Monarch Sheet') {
+    //   debugger
+    //   console.log('Debugger');
+    //   let a = 0
+    //   let b = a + 1
+
+    // }
+
     const { includeMatches, isCaseSensitive } = this.options;
 
     text = isCaseSensitive ? text : text.toLowerCase();
@@ -1261,13 +1269,16 @@ class ExtendedSearch {
     let allIndices = [];
     let totalScore = 0;
 
+    // eslint-disable-next-line no-debugger
+    debugger
+
     // ORs
     for (let i = 0, qLen = query.length; i < qLen; i += 1) {
       const searchers = query[i];
 
       // Reset indices
-      allIndices.length = 0;
-      numMatches = 0;
+      // allIndices.length = 0
+      // numMatches = 0
 
       // ANDs
       for (let j = 0, pLen = searchers.length; j < pLen; j += 1) {
@@ -1285,27 +1296,22 @@ class ExtendedSearch {
               allIndices.push(indices);
             }
           }
-        } else {
-          totalScore = 0;
-          numMatches = 0;
-          allIndices.length = 0;
-          break
-        }
+        } 
       }
+    } // query terms
 
       // OR condition, so if TRUE, return
-      if (numMatches) {
-        let result = {
-          isMatch: true,
-          score: totalScore / numMatches
-        };
+    if (numMatches) {
+      let result = {
+        isMatch: true,
+        score: totalScore / (numMatches * numMatches)
+      };
 
-        if (includeMatches) {
-          result.indices = allIndices;
-        }
-
-        return result
+      if (includeMatches) {
+        result.indices = allIndices;
       }
+
+      return result
     }
 
     // Nothing was matched
@@ -1764,7 +1770,7 @@ class Fuse {
   }
 }
 
-Fuse.version = '6.6.2';
+Fuse.version = '6.6.3-b1';
 Fuse.createIndex = createIndex;
 Fuse.parseIndex = parseIndex;
 Fuse.config = Config;

@@ -1,5 +1,5 @@
 /**
- * Fuse.js v6.6.2 - Lightweight fuzzy-search (http://fusejs.io)
+ * Fuse.js v6.6.3-b1 - Lightweight fuzzy-search (http://fusejs.io)
  *
  * Copyright (c) 2022 Kiro Risk (http://kiro.me)
  * All Rights Reserved. Apache Software License 2.0
@@ -276,7 +276,6 @@ var KeyStore = /*#__PURE__*/function () {
     var totalWeight = 0;
     keys.forEach(function (key) {
       var obj = createKey(key);
-      totalWeight += obj.weight;
 
       _this._keys.push(obj);
 
@@ -1633,7 +1632,13 @@ var ExtendedSearch = /*#__PURE__*/function () {
           isMatch: false,
           score: 1
         };
-      }
+      } // if (text == 'Roman Monarch Sheet') {
+      //   debugger
+      //   console.log('Debugger');
+      //   let a = 0
+      //   let b = a + 1
+      // }
+
 
       var _this$options = this.options,
           includeMatches = _this$options.includeMatches,
@@ -1641,13 +1646,15 @@ var ExtendedSearch = /*#__PURE__*/function () {
       text = isCaseSensitive ? text : text.toLowerCase();
       var numMatches = 0;
       var allIndices = [];
-      var totalScore = 0; // ORs
+      var totalScore = 0; // eslint-disable-next-line no-debugger
+
+      debugger; // ORs
 
       for (var i = 0, qLen = query.length; i < qLen; i += 1) {
         var searchers = query[i]; // Reset indices
-
-        allIndices.length = 0;
-        numMatches = 0; // ANDs
+        // allIndices.length = 0
+        // numMatches = 0
+        // ANDs
 
         for (var j = 0, pLen = searchers.length; j < pLen; j += 1) {
           var searcher = searchers[j];
@@ -1670,27 +1677,23 @@ var ExtendedSearch = /*#__PURE__*/function () {
                 allIndices.push(indices);
               }
             }
-          } else {
-            totalScore = 0;
-            numMatches = 0;
-            allIndices.length = 0;
-            break;
           }
-        } // OR condition, so if TRUE, return
-
-
-        if (numMatches) {
-          var result = {
-            isMatch: true,
-            score: totalScore / numMatches
-          };
-
-          if (includeMatches) {
-            result.indices = allIndices;
-          }
-
-          return result;
         }
+      } // query terms
+      // OR condition, so if TRUE, return
+
+
+      if (numMatches) {
+        var result = {
+          isMatch: true,
+          score: totalScore / (numMatches * numMatches)
+        };
+
+        if (includeMatches) {
+          result.indices = allIndices;
+        }
+
+        return result;
       } // Nothing was matched
 
 
@@ -2216,7 +2219,7 @@ var Fuse$1 = /*#__PURE__*/function () {
   return Fuse;
 }();
 
-Fuse$1.version = '6.6.2';
+Fuse$1.version = '6.6.3-b1';
 Fuse$1.createIndex = createIndex;
 Fuse$1.parseIndex = parseIndex;
 Fuse$1.config = Config;

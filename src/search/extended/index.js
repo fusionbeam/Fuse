@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import parseQuery from './parseQuery'
 import FuzzyMatch from './FuzzyMatch'
 import IncludeMatch from './IncludeMatch'
@@ -70,7 +71,7 @@ export default class ExtendedSearch {
   }
 
   searchIn(text) {
-    const query = this.query
+    const query = this.query;
 
     if (!query) {
       return {
@@ -79,59 +80,65 @@ export default class ExtendedSearch {
       }
     }
 
-    const { includeMatches, isCaseSensitive } = this.options
+    // if (text == 'Roman Monarch Sheet') {
+    //   debugger
+    //   console.log('Debugger');
+    //   let a = 0
+    //   let b = a + 1
 
-    text = isCaseSensitive ? text : text.toLowerCase()
+    // }
 
-    let numMatches = 0
-    let allIndices = []
-    let totalScore = 0
+    const { includeMatches, isCaseSensitive } = this.options;
+
+    text = isCaseSensitive ? text : text.toLowerCase();
+
+    let numMatches = 0;
+    let allIndices = [];
+    let totalScore = 0;
+
+    // eslint-disable-next-line no-debugger
+    debugger
 
     // ORs
     for (let i = 0, qLen = query.length; i < qLen; i += 1) {
-      const searchers = query[i]
+      const searchers = query[i];
 
       // Reset indices
-      allIndices.length = 0
-      numMatches = 0
+      // allIndices.length = 0
+      // numMatches = 0
 
       // ANDs
       for (let j = 0, pLen = searchers.length; j < pLen; j += 1) {
-        const searcher = searchers[j]
-        const { isMatch, indices, score } = searcher.search(text)
+        const searcher = searchers[j];
+        const { isMatch, indices, score } = searcher.search(text);
 
         if (isMatch) {
-          numMatches += 1
-          totalScore += score
+          numMatches += 1;
+          totalScore += score;
           if (includeMatches) {
-            const type = searcher.constructor.type
+            const type = searcher.constructor.type;
             if (MultiMatchSet.has(type)) {
-              allIndices = [...allIndices, ...indices]
+              allIndices = [...allIndices, ...indices];
             } else {
-              allIndices.push(indices)
+              allIndices.push(indices);
             }
           }
-        } else {
-          totalScore = 0
-          numMatches = 0
-          allIndices.length = 0
-          break
-        }
+        } 
       }
+    } // query terms
 
       // OR condition, so if TRUE, return
-      if (numMatches) {
-        let result = {
-          isMatch: true,
-          score: totalScore / numMatches
-        }
+    if (numMatches) {
+      let result = {
+        isMatch: true,
+        score: totalScore / (numMatches * numMatches)
+      };
 
-        if (includeMatches) {
-          result.indices = allIndices
-        }
-
-        return result
+      if (includeMatches) {
+        result.indices = allIndices;
       }
+
+      return result
     }
 
     // Nothing was matched

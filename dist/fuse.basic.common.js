@@ -1,5 +1,5 @@
 /**
- * Fuse.js v6.6.2 - Lightweight fuzzy-search (http://fusejs.io)
+ * Fuse.js v6.6.3-b1 - Lightweight fuzzy-search (http://fusejs.io)
  *
  * Copyright (c) 2022 Kiro Risk (http://kiro.me)
  * All Rights Reserved. Apache Software License 2.0
@@ -193,7 +193,6 @@ var KeyStore = /*#__PURE__*/function () {
     var totalWeight = 0;
     keys.forEach(function (key) {
       var obj = createKey(key);
-      totalWeight += obj.weight;
 
       _this._keys.push(obj);
 
@@ -1453,7 +1452,7 @@ var Fuse$1 = /*#__PURE__*/function () {
   return Fuse;
 }();
 
-Fuse$1.version = '6.6.2';
+Fuse$1.version = '6.6.3-b1';
 Fuse$1.createIndex = createIndex;
 Fuse$1.parseIndex = parseIndex;
 Fuse$1.config = Config;
