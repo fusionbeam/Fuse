@@ -97,7 +97,7 @@ export default class ExtendedSearch {
     let totalScore = 0;
 
     // eslint-disable-next-line no-debugger
-    debugger
+    // debugger
 
     // ORs
     for (let i = 0, qLen = query.length; i < qLen; i += 1) {
