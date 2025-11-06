@@ -1,7 +1,7 @@
 /**
  * Fuse.js v6.6.3-b1 - Lightweight fuzzy-search (http://fusejs.io)
  *
- * Copyright (c) 2022 Kiro Risk (http://kiro.me)
+ * Copyright (c) 2025 Kiro Risk (http://kiro.me)
  * All Rights Reserved. Apache Software License 2.0
  *
  * http://www.apache.org/licenses/LICENSE-2.0

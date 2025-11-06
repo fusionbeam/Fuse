@@ -1,7 +1,7 @@
 /**
  * Fuse.js v6.6.3-b1 - Lightweight fuzzy-search (http://fusejs.io)
  *
- * Copyright (c) 2022 Kiro Risk (http://kiro.me)
+ * Copyright (c) 2025 Kiro Risk (http://kiro.me)
  * All Rights Reserved. Apache Software License 2.0
  *
  * http://www.apache.org/licenses/LICENSE-2.0
@@ -1270,7 +1270,7 @@ class ExtendedSearch {
     let totalScore = 0;
 
     // eslint-disable-next-line no-debugger
-    debugger
+    // debugger
 
     // ORs
     for (let i = 0, qLen = query.length; i < qLen; i += 1) {
